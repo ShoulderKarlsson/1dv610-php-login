@@ -17,7 +17,6 @@ class User {
 		}
 
 		// Keeping exception message to make it easier to read.
-		// 
 		if (empty($password)) {
 			throw new \error\PasswordMissingException();
 		}
