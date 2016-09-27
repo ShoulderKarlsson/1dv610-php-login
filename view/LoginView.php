@@ -28,6 +28,12 @@ class LoginView {
 		} else if ($flashMessage->isCredentialsFlash()) {
 			$this->usernameValue = $flashMessage->getUsernameValueFlash();
 			$this->message = $flashMessage->getCredentialsFlash();
+
+		} else if ($flashMessage->isWelcomeFlash()) {
+			$this->message = $flashMessage->getWelcomeFlash();
+
+		}  else if ($flashMessage->isByeFlash()) {
+			$this->message = $flashMessage->getByeFlash();
 		}
 	}
 
@@ -42,16 +48,10 @@ class LoginView {
 		$active = new \model\SessionModel();
 
 		if ($active->isLoggedIn()) {
-			$this->message = 'THIS IS HARDCODED AND NEEDS TO CHANGE';
 			return $this->generateLogoutButtonHTML($this->message);
 		} else {
 			return $this->generateLoginFormHTML($this->message);
 		}
-
-
-
-		// $response = $this->generateLoginFormHTML($this->message);
-		// return $response;
 	}
 
 

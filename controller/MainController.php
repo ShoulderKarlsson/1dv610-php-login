@@ -34,7 +34,7 @@ class MainController {
 			$this->loginController->login();
 			
 		} else if ($this->loginView->wantsToLogout()) {
-			
+			$this->loginController->logout();
 		} else {
 			$this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTime);
 		}

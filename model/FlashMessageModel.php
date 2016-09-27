@@ -3,13 +3,18 @@
 namespace model;
 
 class FlashMessageModel {
-	private static $usernameMessage = 'Username is missing';
-	private static $passwordMessage = 'Password is missing';
+
 	private static $usernameFlash = 'FlashMessageModel::usernameFlash';
 	private static $passwordFlash = 'FlashMessageModel::passwordFlash';
 	private static $usernameValueFlash = 'FlashMessageModel::usernameValue';
 	private static $credentialsFlash = 'FlashMessageModel::credentialsFlash';
+	private static $welcomeFlash = 'FlashMessageModel::welcome';
+	private static $byeFlash = 'FlashMessageModel::bye';
+	private static $usernameMessage = 'Username is missing';
+	private static $passwordMessage = 'Password is missing';
 	private static $credentialsMessage = 'Wrong username or password';
+	private static $welcomeMessage = 'Welcome';
+	private static $byeMessage = 'Bye bye!';
 
 	public function setUsernameMessage() {
 		$_SESSION[self::$usernameFlash] = self::$usernameMessage;
@@ -52,6 +57,14 @@ class FlashMessageModel {
 		return isset($_SESSION[self::$credentialsFlash]);
 	}
 
+	public function isWelcomeFlash() : bool {
+		return isset($_SESSION[self::$welcomeFlash]);
+	}
+
+	public function isByeFlash() : bool {
+		return isset($_SESSION[self::$byeFlash]);
+	}
+
 	public function setUsernameValueFlash(string $username) {
 		$_SESSION[self::$usernameValueFlash] = $username;
 	}
@@ -60,5 +73,25 @@ class FlashMessageModel {
 		$value = $_SESSION[self::$usernameValueFlash];
 		unset($_SESSION[self::$usernameValueFlash]);
 		return $value;
+	}
+
+	public function setWelcomeFlash() {
+		$_SESSION[self::$welcomeFlash] = self::$welcomeMessage;
+	}
+
+	public function getWelcomeFlash() : string {
+		$message = $_SESSION[self::$welcomeFlash];
+		unset($_SESSION[self::$welcomeFlash]);
+		return $message;
+	}
+
+	public function setByeFlash() {
+		$_SESSION[self::$byeFlash] = self::$byeMessage;
+	}
+
+	public function getByeFlash() : string {
+		$message = $_SESSION[self::$byeFlash];
+		unset($_SESSION[self::$byeFlash]);
+		return $message;
 	}
 }

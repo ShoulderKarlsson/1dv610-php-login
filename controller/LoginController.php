@@ -16,6 +16,7 @@ class LoginController {
 	private $flashMessage;
 	private $users;
 	private $userDAL;
+	private $sessionModel;
 
 	public function __construct(\view\LoginView $loginView, 
 								\view\DateTimeView $dateTimeView, 
@@ -25,37 +26,44 @@ class LoginController {
 		$this->dateTimeView = $dateTimeView;
 		$this->layoutView = $layoutView;
 		$this->flashMessage = $flashMessage;
+		$this->sessionModel = new \model\SessionModel();
 	}
 
 	public function login() {
 
 		try {
-			$this->sessionModel = new \model\SessionModel();
 			$this->newUser = $this->loginView->getUserinformation();
 			$this->userDAL = new \model\UserDAL();
 			$this->users = new \model\Users($this->userDAL, $this->newUser);
 			$this->users->tryToLoginUser($this->sessionModel);
-
 			$this->sessionModel->login();
-			header(self::$REDIRECT_PATH);
-
-			return;
+			$this->flashMessage->setWelcomeFlash();
+			return header(self::$REDIRECT_PATH);
+			
 		} catch (\error\UsernameMissingException $e) {
 			$this->flashMessage->setUsernameMessage();
 			header(self::$REDIRECT_PATH);
+
 		} catch(\error\PasswordMissingException $e) {
 			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setPasswordMessage();
 			header(self::$REDIRECT_PATH);
+
 		} catch (\error\NoSuchUserException $e) {
 			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setWrongCredentialsMessage();
 			header(self::$REDIRECT_PATH);
+
 		} catch (\error\AlreadyLoggedInException $e) {
 			$this->layoutView->render(true, $this->loginView, $this->dateTimeView);
 		}
+	}
 
-
-		$this->layoutView->render(false, $this->loginView, $this->dateTimeView);
+	public function logout() {
+		if ($this->sessionModel->isLoggedIn()) {
+			$this->sessionModel->logout();
+			$this->flashMessage->setByeFlash();
+			header(self::$REDIRECT_PATH);
+		}
 	}
 }
