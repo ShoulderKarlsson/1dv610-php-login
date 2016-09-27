@@ -31,12 +31,13 @@ class MainController {
 	public function init() {
 
 		if ($this->loginView->wantsToLogin()) {
-			$this->loginController->login();
+			return $this->loginController->login();
 			
 		} else if ($this->loginView->wantsToLogout()) {
-			$this->loginController->logout();
+			return $this->loginController->logout();
+
 		} else {
-			$this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTime);
+			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTime);
 		}
 	}
 }
