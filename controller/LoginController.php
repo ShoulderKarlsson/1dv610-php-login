@@ -3,15 +3,24 @@
 namespace controller;
 
 require_once('model/User.php');
+require_once('model/Users.php');
+require_once('model/UserDAL.php');
+require_once('model/SessionModel.php');
 
 class LoginController {
+	private static $REDIRECT_PATH = 'Location: index.php';
 	private $loginView;
 	private $dateTimeView;
 	private $newUser;
 	private $layoutView;
 	private $flashMessage;
+	private $users;
+	private $userDAL;
 
-	public function __construct(\view\LoginView $loginView, \view\DateTimeView $dateTimeView, \view\LayoutView $layoutView, \model\FlashMessageModel $flashMessage) {
+	public function __construct(\view\LoginView $loginView, 
+								\view\DateTimeView $dateTimeView, 
+								\view\LayoutView $layoutView, 
+								\model\FlashMessageModel $flashMessage) {
 		$this->loginView = $loginView;
 		$this->dateTimeView = $dateTimeView;
 		$this->layoutView = $layoutView;
@@ -19,17 +28,25 @@ class LoginController {
 	}
 
 	public function login() {
+
 		try {
 			$this->newUser = $this->loginView->getUserinformation();
-			
+			$this->userDAL = new \model\UserDAL();
+			$this->users = new \model\Users($this->userDAL, $this->newUser);
+			$this->users->tryToLoginUser();
+
 			return;
 		} catch (\error\UsernameMissingException $e) {
-			$this->loginView->setUsernameFlash($this->flashMessage);
+			$this->flashMessage->setUsernameMessage();
+			header(self::$REDIRECT_PATH);
 		} catch(\error\PasswordMissingException $e) {
-			$this->loginView->setPasswordFlash($this->flashMessage);
-
-		} finally {
-			header('Location: index.php'); // Maby need to move this to each catch.
+			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
+			$this->flashMessage->setPasswordMessage();
+			header(self::$REDIRECT_PATH);
+		} catch (\error\NoSuchUserException $e) {
+			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
+			$this->flashMessage->setWrongCredentialsMessage();
+			header(self::$REDIRECT_PATH);
 		}
 
 

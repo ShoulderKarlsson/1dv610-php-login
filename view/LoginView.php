@@ -17,11 +17,17 @@ class LoginView {
 	private $usernameValue = '';
 	
 	public function __construct(\model\FlashMessageModel $flashMessage) {
+		
 		if ($flashMessage->isUsernameFlash()) {
 			$this->message = $flashMessage->getUsernameFlash();
+
 		} else if ($flashMessage->isPasswordFlash()) {
 			$this->usernameValue = $flashMessage->getUsernameValueFlash();
 			$this->message = $flashMessage->getPasswordFlash();
+		
+		} else if ($flashMessage->isCredentialsFlash()) {
+			$this->usernameValue = $flashMessage->getUsernameValueFlash();
+			$this->message = $flashMessage->getCredentialsFlash();
 		}
 	}
 

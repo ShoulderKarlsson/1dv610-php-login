@@ -6,31 +6,23 @@ require_once('exceptions/PasswordMissingException.php');
 require_once('exceptions/UsernameMissingException.php');
 
 class User {
-	private $username;
-	private $password;
+	
+	public $username;
+	public $password;
 
 	public function __construct(string $username, string $password) {
 
-		// Keeping exception message to make it easier to read.
-		if (empty($username)) {
-			throw new \error\UsernameMissingException();
-		}
+		// // Not using message, keeping for logs
+		// if (empty($username)) {
+		// 	throw new \error\UsernameMissingException('Username is missing!');
+		// }
 
-		// Keeping exception message to make it easier to read.
-		// 
-		if (empty($password)) {
-			throw new \error\PasswordMissingException();
-		}
+		// // Not using message, keeping for logs
+		// if (empty($password)) {
+		// 	throw new \error\PasswordMissingException('Password is missing!');
+		// }
 
 		$this->username = $username;
 		$this->password = $password;
-	}
-
-	public function getPassword() : string {
-		return $this->password;
-	}
-
-	public function getUsername() : string {
-		return $this->username;
 	}
 }

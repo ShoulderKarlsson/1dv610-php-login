@@ -8,7 +8,8 @@ class FlashMessageModel {
 	private static $usernameFlash = 'FlashMessageModel::usernameFlash';
 	private static $passwordFlash = 'FlashMessageModel::passwordFlash';
 	private static $usernameValueFlash = 'FlashMessageModel::usernameValue';
-
+	private static $credentialsFlash = 'FlashMessageModel::credentialsFlash';
+	private static $credentialsMessage = 'Wrong username or password';
 
 	public function setUsernameMessage() {
 		$_SESSION[self::$usernameFlash] = self::$usernameMessage;
@@ -16,6 +17,10 @@ class FlashMessageModel {
 
 	public function setPasswordMessage() {
 		$_SESSION[self::$passwordFlash] = self::$passwordMessage;
+	}
+
+	public function setWrongCredentialsMessage() {
+		$_SESSION[self::$credentialsFlash] = self::$credentialsMessage;
 	}
 	public function getUsernameFlash() : string {
 		$message = $_SESSION[self::$usernameFlash];
@@ -29,12 +34,22 @@ class FlashMessageModel {
 		return $message;
 	}
 
+	public function getCredentialsFlash() : string {
+		$message = $_SESSION[self::$credentialsFlash];
+		unset($_SESSION[self::$credentialsFlash]);
+		return $message;
+	}
+
 	public function isUsernameFlash() : bool {
 		return isset($_SESSION[self::$usernameFlash]);
 	}
 
 	public function isPasswordFlash() : bool {
 		return isset($_SESSION[self::$passwordFlash]);
+	}
+
+	public function isCredentialsFlash() : bool {
+		return isset($_SESSION[self::$credentialsFlash]);
 	}
 
 	public function setUsernameValueFlash(string $username) {
