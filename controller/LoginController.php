@@ -30,10 +30,14 @@ class LoginController {
 	public function login() {
 
 		try {
+			$this->sessionModel = new \model\SessionModel();
 			$this->newUser = $this->loginView->getUserinformation();
 			$this->userDAL = new \model\UserDAL();
 			$this->users = new \model\Users($this->userDAL, $this->newUser);
-			$this->users->tryToLoginUser();
+			$this->users->tryToLoginUser($this->sessionModel);
+
+			$this->sessionModel->login();
+			header(self::$REDIRECT_PATH);
 
 			return;
 		} catch (\error\UsernameMissingException $e) {
@@ -47,6 +51,8 @@ class LoginController {
 			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setWrongCredentialsMessage();
 			header(self::$REDIRECT_PATH);
+		} catch (\error\AlreadyLoggedInException $e) {
+			$this->layoutView->render(true, $this->loginView, $this->dateTimeView);
 		}
 
 

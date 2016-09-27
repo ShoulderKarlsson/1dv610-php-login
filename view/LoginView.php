@@ -17,7 +17,7 @@ class LoginView {
 	private $usernameValue = '';
 	
 	public function __construct(\model\FlashMessageModel $flashMessage) {
-		
+
 		if ($flashMessage->isUsernameFlash()) {
 			$this->message = $flashMessage->getUsernameFlash();
 
@@ -39,8 +39,19 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$response = $this->generateLoginFormHTML($this->message);
-		return $response;
+		$active = new \model\SessionModel();
+
+		if ($active->isLoggedIn()) {
+			$this->message = 'THIS IS HARDCODED AND NEEDS TO CHANGE';
+			return $this->generateLogoutButtonHTML($this->message);
+		} else {
+			return $this->generateLoginFormHTML($this->message);
+		}
+
+
+
+		// $response = $this->generateLoginFormHTML($this->message);
+		// return $response;
 	}
 
 

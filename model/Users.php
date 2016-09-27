@@ -16,6 +16,7 @@ class Users {
 	private $users = array();
 	private $userDAL;
 	private $userCredentials;
+	private $sessionModel;
 
 	public function __construct(UserDAL $db, User $u) {
 		$this->userDAL = $db;
@@ -23,7 +24,14 @@ class Users {
 		$this->getUsers();
 	}
 
-	public function tryToLoginUser() {
+	public function tryToLoginUser(SessionModel $sessionModel) {
+
+
+		// If the user tries to login when already logged in.
+		// Not using message, keeping for logs.
+		if ($sessionModel->isLoggedIn()) {
+			throw new \error\AlreadyLoggedInException('Already logged in.');
+		}
 
 		// Not using message, keeping for logs
 		if (empty($this->userCredentials->username)) {
@@ -40,10 +48,11 @@ class Users {
 			throw new \error\NoSuchUserException('Wrong username or password');
 		}
 
+
 	}
 
 
-	// Is this okej?
+	// Ask about this [Using array since saving in json ($user[self::$password / self::$username])]
 	private function searchForUser() : bool {
 		foreach ($this->users as $user) {
 			if ($user[self::$username] === $this->userCredentials->username && 

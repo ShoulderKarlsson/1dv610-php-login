@@ -7,7 +7,7 @@ class SessionModel {
 	private static $isLoggedIn = 'SessionModel::isLoggedIn';
 
 	public function isLoggedIn() : bool {
-		return isset($_SESSION[self::$isLoggedIn]) && $_SESSION[self::$isLoggedIn] == true;
+		return isset($_SESSION[self::$isLoggedIn]) && $_SESSION[self::$isLoggedIn] === true;
 	}
 
 	public function login() {
