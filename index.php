@@ -6,3 +6,4 @@ session_start();
 
 $mc = new \controller\MainController();
 $mc->init();
+return;
