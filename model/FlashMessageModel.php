@@ -12,7 +12,7 @@ class FlashMessageModel {
 	private static $byeFlash = 'FlashMessageModel::bye';
 	private static $usernameMessage = 'Username is missing';
 	private static $passwordMessage = 'Password is missing';
-	private static $credentialsMessage = 'Wrong username or password';
+	private static $credentialsMessage = 'Wrong name or password';
 	private static $welcomeMessage = 'Welcome';
 	private static $byeMessage = 'Bye bye!';
 
@@ -29,7 +29,7 @@ class FlashMessageModel {
 	}
 	public function getUsernameFlash() : string {
 		$message = $_SESSION[self::$usernameFlash];
-		unset($_SESSION[self::$usernameFlash]);	
+		unset($_SESSION[self::$usernameFlash]);
 		return $message;
 	}
 
