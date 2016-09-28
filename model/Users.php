@@ -65,10 +65,6 @@ class Users {
 		 * är tomma, presentera båda dem felmeddelandena
 		 * Ett extra exception.
 		 *
-		 *
-		 *
-		 * $this->username != strip_tags($this->username)
-		 * Om det är olagliga characters.
 		 */
 
 		if (strlen($this->userCredentials->password) < 6) {

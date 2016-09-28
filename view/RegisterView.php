@@ -16,28 +16,26 @@ class RegisterView {
     public function __construct(\model\FlashMessageModel $flashMessage) {
         if ($flashMessage->isShortPasswordFlash()) {
             $this->message = $flashMessage->getShortPasswordFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
+            // $this->username = $flashMessage->getUsernameValueFlash();
 
         } else if ($flashMessage->isNotMatchingPasswordFlash()) {
             $this->message = $flashMessage->getNotMatchingPasswordFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
+            // $this->username = $flashMessage->getUsernameValueFlash();
 
         } else if ($flashMessage->isShortUsernameFlash()) {
             $this->message = $flashMessage->getShortUsernameFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
+            // $this->username = $flashMessage->getUsernameValueFlash();
 
         } else if ($flashMessage->isBusyUsernameFlash()) {
             $this->message = $flashMessage->getBusyUsernameFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
+            // $this->username = $flashMessage->getUsernameValueFlash();
         } else if ($flashMessage->isInvalidFlash()) {
             $this->message = $flashMessage->getInvalidFlash();
-            $this->username = $flashMessage->getUsernameValueFlash();
+            // $this->username = $flashMessage->getUsernameValueFlash();
         }
+
+        $this->username = $flashMessage->getUsernameValueFlash();
     }
-
-
-
-
 
     private function getRequestUsername() : string {
         return $_POST[self::$name];
