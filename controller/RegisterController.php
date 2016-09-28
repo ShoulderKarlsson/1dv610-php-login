@@ -50,9 +50,13 @@ class RegisterController {
             $this->redirect();
 
         } catch (\error\BusyUsernameException $e) {
-            print_r($e->getMessage());
+            // $this->redirect();
+            $this->flashMessageModel->setBusyUsernameMessage();
+            $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+            $this->redirect();
         }
 
+        echo 'Nothing happend';
 
     }
 

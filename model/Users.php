@@ -70,7 +70,7 @@ class Users {
 			throw new \error\ShortUsernameException('Username has too few characters, at least 3 characters.');
 		}
 
-		if ($this->searchForUser() === true) {
+		if ($this->searchForUsername() === true) {
 			throw new \error\BusyUsernameException('User exists, pick another username.');
 		}
 	}
@@ -85,6 +85,17 @@ class Users {
 		}
 
 		return false;
+	}
+
+	private function searchForUsername() : bool {
+		foreach ($this->users as $user) {
+			if ($user[self::$username] === $this->userCredentials->username) {
+				return true;
+			}
+		}
+
+		return false;
+
 	}
 
 	private function getUsers() {
