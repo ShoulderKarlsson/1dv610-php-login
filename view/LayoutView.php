@@ -55,7 +55,6 @@ private function renderIsLoggedIn($isLoggedIn) {
         ';
         } else {
             return '
-                '. $destination .'
                 <h2>Not logged in</h2>
             ';
         }

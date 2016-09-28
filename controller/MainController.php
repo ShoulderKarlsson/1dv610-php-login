@@ -42,8 +42,10 @@ class MainController {
 			return $this->loginController->logout();
 
 		} else if ($this->registerView->wantsToAccsessRegister()) {
+			if ($this->sessionModel->isLoggedIn()) {
+				header('Location: '. $_SERVER['PHP_SELF']);
+			}
 
-			// Måste lägga till så man inte kan komma hit ifall man är inloggad.
 			$this->registerController->presentRegister($this->sessionModel->isLoggedIn());
 		} else {
 			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTime);
