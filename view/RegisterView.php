@@ -13,9 +13,12 @@ class RegisterView {
     private $username = '';
     private static $register_get = 'register';
 
-
-
-
+    public function __construct(\model\FlashMessageModel $flashMessage) {
+        if ($flashMessage->isShortPasswordFlash()) {
+            $this->message = $flashMessage->getShortPasswordFlash();
+            $this->username = $flashMessage->getUsernameValueFlash();
+        }
+    }
 
 
 
@@ -26,11 +29,11 @@ class RegisterView {
     }
 
     private function getRequestPassword() : string {
-        return $_POST[self::$name];
+        return $_POST[self::$password];
     }
 
     private function getPasswordRepeat() : string {
-        return $_POST[self::$name];
+        return $_POST[self::$passwordRepeat];
     }
 
 

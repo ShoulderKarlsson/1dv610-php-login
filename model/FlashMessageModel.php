@@ -15,6 +15,8 @@ class FlashMessageModel {
 	private static $credentialsMessage = 'Wrong name or password';
 	private static $welcomeMessage = 'Welcome';
 	private static $byeMessage = 'Bye bye!';
+	private static $shortPasswordMessage = 'Password has too few characters, at least 6 characters.';
+	private static $shortPasswordFlash = 'FlashMessageModel::shortPassword';
 
 	public function setUsernameMessage() {
 		$_SESSION[self::$usernameFlash] = self::$usernameMessage;
@@ -27,6 +29,18 @@ class FlashMessageModel {
 	public function setWrongCredentialsMessage() {
 		$_SESSION[self::$credentialsFlash] = self::$credentialsMessage;
 	}
+
+	public function setShortPasswordMessage() {
+		$_SESSION[self::$shortPasswordFlash] = self::$shortPasswordMessage;
+	}
+
+	public function getShortPasswordFlash() : string {
+		$message = $_SESSION[self::$shortPasswordFlash];
+		unset($_SESSION[self::$shortPasswordFlash]);
+		return $message;
+	}
+
+
 	public function getUsernameFlash() : string {
 		$message = $_SESSION[self::$usernameFlash];
 		unset($_SESSION[self::$usernameFlash]);
@@ -63,6 +77,10 @@ class FlashMessageModel {
 
 	public function isByeFlash() : bool {
 		return isset($_SESSION[self::$byeFlash]);
+	}
+
+	public function isShortPasswordFlash() : bool {
+		return isset($_SESSION[self::$shortPasswordFlash]);
 	}
 
 	public function setUsernameValueFlash(string $username) {

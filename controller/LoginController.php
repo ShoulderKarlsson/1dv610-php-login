@@ -8,7 +8,6 @@ require_once('model/UserDAL.php');
 require_once('model/SessionModel.php');
 
 class LoginController {
-	// private static $REDIRECT_PATH = 'Location: index.php';
 	private $loginView;
 	private $dateTimeView;
 	private $newUser;

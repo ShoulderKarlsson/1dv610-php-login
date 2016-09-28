@@ -6,6 +6,7 @@ class RegisterController {
     private $dateTimeView;
     private $flashMessageModel;
     private $layoutView;
+    private $newUser;
     public function __construct(\view\RegisterView $rv, \view\LayoutView $lv, \view\DateTimeView $dtv, \model\FlashMessageModel $fm) {
         $this->registerView = $rv;
         $this->dateTimeView = $dtv;
@@ -17,10 +18,37 @@ class RegisterController {
         $this->layoutView->renderRegister($isLoggedIn, $this->registerView, $this->dateTimeView);
     }
 
-    // public function register() {
-    //     // return 'Hello';
-    //     $newUser = $this->registerView->getNewUsercredentials();
-    //     var_dump($newUser);
-    //     return;
-    // }
+    public function register() {
+        /**
+         * Hämta informationen från POST REQUEST.
+         * Kolla så längd på lösenord och användarnamn är korrekt
+         * Kolla så lösenorden stämmer överrens
+         * Använd den class som tillhandahåller alla användare
+         * och sök ifall användarnamnet är upptaget.
+         */
+
+        // Collecting info from POST REQUEST
+        $this->newUser = $this->registerView->getNewUsercredentials();
+        $this->userDAL = new \model\UserDAL();
+        $this->users = new \model\Users($this->userDAL, $this->newUser);
+
+        try {
+            $this->users->tryToRegisterUser();
+        } catch (\error\ShortPasswordException $e) {
+            $this->flashMessageModel->setShortPasswordMessage();
+            $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+            // return;
+            header('Location: ?register');
+        } catch (\error\NotMatchingPasswordException $e) {
+            print_r($e->getMessage());
+
+        } catch (\error\ShortUsernameException $e) {
+            print_r($e->getMessage());
+
+        } catch (\error\BusyUsernameException $e) {
+            print_r($e->getMessage());
+        }
+
+
+    }
 }

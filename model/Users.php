@@ -8,7 +8,10 @@ require_once('exceptions/NoSuchUserException.php');
 require_once('exceptions/AlreadyLoggedInException.php');
 require_once('exceptions/UsernameMissingException.php');
 require_once('exceptions/PasswordMissingException.php');
-
+require_once('exceptions/ShortPasswordException.php');
+require_once('exceptions/ShortUsernameException.php');
+require_once('exceptions/NotMatchingPasswordException.php');
+require_once('exceptions/BusyUsernameException.php');
 
 class Users {
 
@@ -22,7 +25,7 @@ class Users {
 	private $userCredentials;
 	private $sessionModel;
 
-	public function __construct(UserDAL $db, User $u) {
+	public function __construct(UserDAL $db, $u) {
 		$this->userDAL = $db;
 		$this->userCredentials = $u;
 		$this->getUsers();
@@ -50,6 +53,25 @@ class Users {
 		// Not using message, keeping for logs.
 		if ($this->searchForUser() === false) {
 			throw new \error\NoSuchUserException('Wrong name or password');
+		}
+	}
+
+	public function tryToRegisterUser() {
+
+		if (strlen($this->userCredentials->password) < 6) {
+			throw new \error\ShortPasswordException('Password has too few characters, at least 6 characters.');
+		}
+
+		if (strcmp($this->userCredentials->password, $this->userCredentials->passwordRepeat) !== 0) {
+			throw new \error\NotMatchingPasswordException('Passwords do not match.');
+		}
+
+		if (strlen($this->userCredentials->username) < 3) {
+			throw new \error\ShortUsernameException('Username has too few characters, at least 3 characters.');
+		}
+
+		if ($this->searchForUser() === true) {
+			throw new \error\BusyUsernameException('User exists, pick another username.');
 		}
 	}
 
