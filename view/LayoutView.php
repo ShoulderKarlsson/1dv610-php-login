@@ -34,6 +34,7 @@ public function renderRegister($isLoggedIn, RegisterView $rv, DateTimeView $dtv)
         </head>
         <body>
             <h1>Assignment 2</h1>
+            ' . $destination . '
             ' . $this->renderIsLoggedIn($isLoggedIn) . '
             <div class="container">
                 ' . $rv->response() . '
@@ -46,12 +47,12 @@ public function renderRegister($isLoggedIn, RegisterView $rv, DateTimeView $dtv)
 }
 
 private function renderIsLoggedIn($isLoggedIn) {
-    $destination = '';
-    if (in_array('register', explode('?', $_SERVER['REQUEST_URI']))) {
-        $destination = '<a href="/">Back to login</a>';
-    } else {
-        $destination = '<a href="?register">Register a new user</a>';
-    }
+    // $destination = '';
+    // if (in_array('register', explode('?', $_SERVER['REQUEST_URI']))) {
+    //     // $destination = '<a href="/">Back to login</a>';
+    // } else {
+    //     $destination = '<a href="?register">Register a new user</a>';
+    // }
 
     if ($isLoggedIn) {
         return '
@@ -65,3 +66,10 @@ private function renderIsLoggedIn($isLoggedIn) {
         }
     }
 }
+
+
+
+
+/**
+ * Måste fixa så det visas back to login eller register a new user
+ */
