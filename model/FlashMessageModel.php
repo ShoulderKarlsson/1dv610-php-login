@@ -19,6 +19,8 @@ class FlashMessageModel {
 	private static $shortPasswordMessage = 'Password has too few characters, at least 6 characters.';
 	private static $notMatchingPasswordFlash = 'FlashMessageModel::notmatching';
 	private static $notMatchingPasswordMessage = 'Passwords do not match.';
+	private static $shortUsernameFlash = 'FlashMessageModel::shortUsername';
+	private static $shortUsernameMessage = 'Username has too few characters, at least 3 characters.';
 
 	public function setUsernameMessage() {
 		$_SESSION[self::$usernameFlash] = self::$usernameMessage;
@@ -71,6 +73,12 @@ class FlashMessageModel {
 		return $message;
 	}
 
+	public function getShortUsernameFlash() : string {
+		$message = $_SESSION[self::$shortUsernameFlash];
+		unset($_SESSION[self::$shortUsernameFlash]);
+		return $message;
+	}
+
 	public function isUsernameFlash() : bool {
 		return isset($_SESSION[self::$usernameFlash]);
 	}
@@ -98,6 +106,15 @@ class FlashMessageModel {
 	public function isNotMatchingPasswordFlash() : bool {
 		return isset($_SESSION[self::$notMatchingPasswordFlash]);
 	}
+
+	public function isShortUsernameFlash() : bool {
+		return isset($_SESSION[self::$shortUsernameFlash]);
+	}
+
+	public function setShortUsernameMessage() {
+		$_SESSION[self::$shortUsernameFlash] = self::$shortUsernameMessage;
+	}
+
 
 	public function setUsernameValueFlash(string $username) {
 		$_SESSION[self::$usernameValueFlash] = $username;
