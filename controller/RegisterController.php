@@ -64,6 +64,8 @@ class RegisterController {
             return;
         }
 
+        // echo 'Valid username!';
+
         $this->users->addNewUser();
         $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
         $this->flashMessageModel->setNewRegisterMessage();
