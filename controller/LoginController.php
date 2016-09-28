@@ -39,23 +39,19 @@ class LoginController {
 			$this->sessionModel->login();
 			$this->flashMessage->setWelcomeFlash();
 			return header('Location: '.$_SERVER['PHP_SELF']);
-			// return header(self::$REDIRECT_PATH);
 
 		} catch (\error\UsernameMissingException $e) {
 			$this->flashMessage->setUsernameMessage();
-			// header(self::$REDIRECT_PATH);
 			header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch(\error\PasswordMissingException $e) {
 			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setPasswordMessage();
-			// header(self::$REDIRECT_PATH);
 			header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch (\error\NoSuchUserException $e) {
 			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setWrongCredentialsMessage();
-			// header(self::$REDIRECT_PATH);
 			header('Location: '.$_SERVER['PHP_SELF']);
 		} catch (\error\AlreadyLoggedInException $e) {
 			$this->layoutView->render(true, $this->loginView, $this->dateTimeView);
@@ -66,7 +62,6 @@ class LoginController {
 		if ($this->sessionModel->isLoggedIn()) {
 			$this->sessionModel->logout();
 			$this->flashMessage->setByeFlash();
-			// header(self::$REDIRECT_PATH);
 			header('Location: '.$_SERVER['PHP_SELF']);
 		}
 	}
