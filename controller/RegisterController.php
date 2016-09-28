@@ -39,7 +39,7 @@ class RegisterController {
             $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
             $this->redirect();
             return;
-            
+
         } catch (\error\NotMatchingPasswordException $e) {
             $this->flashMessageModel->setNotMathingPasswordMessage();
             $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
@@ -64,10 +64,10 @@ class RegisterController {
             return;
         }
 
+        $this->users->addNewUser();
         $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
         $this->flashMessageModel->setNewRegisterMessage();
         header('Location: /');
-        // $this->users->addNewUser();
         // $this->flashMessageModel->setNewRegisterMessage();
         // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
         //
