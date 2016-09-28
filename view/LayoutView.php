@@ -13,7 +13,7 @@ public function render($isLoggedIn, LoginView $v, DateTimeView $dtv) {
         </head>
         <body>
             <h1>Assignment 2</h1>
-            <a href="?register">Register a new User</a>
+            <a href="?register">Register a new user</a>
                 ' . $this->renderIsLoggedIn($isLoggedIn) . '
               <div class="container">
                   ' . $v->response() . '
