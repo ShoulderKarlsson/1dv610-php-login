@@ -60,7 +60,7 @@ class RegisterController {
         }
 
         $this->users->addNewUser();
-        $this->flashMessageModel->setNewRegisterMessage();
+        // $this->flashMessageModel->setNewRegisterMessage();
         // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
         // header('Location: /');
     }
