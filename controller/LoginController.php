@@ -38,7 +38,8 @@ class LoginController {
 			$this->users->tryToLoginUser($this->sessionModel);
 			$this->sessionModel->login();
 			$this->flashMessage->setWelcomeFlash();
-			return header(self::$REDIRECT_PATH);
+			return header('Location: '.$_SERVER['PHP_SELF']);
+			// return header(self::$REDIRECT_PATH);
 
 		} catch (\error\UsernameMissingException $e) {
 			$this->flashMessage->setUsernameMessage();
