@@ -51,10 +51,7 @@ class Users {
 		if ($this->searchForUser() === false) {
 			throw new \error\NoSuchUserException('Wrong name or password');
 		}
-
-
 	}
-
 
 	// Ask about this [Using array since saving in json ($user[self::$password / self::$username])]
 	private function searchForUser() : bool {
