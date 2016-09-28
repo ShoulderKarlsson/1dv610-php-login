@@ -45,7 +45,7 @@ class Users {
 
 		// Not using message, keeping for logs.
 		if ($this->searchForUser() === false) {
-			throw new \error\NoSuchUserException('Wrong username or password');
+			throw new \error\NoSuchUserException('Wrong name or password');
 		}
 
 
@@ -55,7 +55,7 @@ class Users {
 	// Ask about this [Using array since saving in json ($user[self::$password / self::$username])]
 	private function searchForUser() : bool {
 		foreach ($this->users as $user) {
-			if ($user[self::$username] === $this->userCredentials->username && 
+			if ($user[self::$username] === $this->userCredentials->username &&
 				$user[self::$password] === $this->userCredentials->password) {
 				return true;
 			}
