@@ -59,9 +59,12 @@ class LoginController {
 	}
 
 	public function logout() {
+
 		if ($this->sessionModel->isLoggedIn()) {
 			$this->sessionModel->logout();
 			$this->flashMessage->setByeFlash();
+			header('Location: '.$_SERVER['PHP_SELF']);
+		} else {
 			header('Location: '.$_SERVER['PHP_SELF']);
 		}
 	}
