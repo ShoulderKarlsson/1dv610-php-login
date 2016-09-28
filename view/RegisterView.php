@@ -17,6 +17,9 @@ class RegisterView {
         if ($flashMessage->isShortPasswordFlash()) {
             $this->message = $flashMessage->getShortPasswordFlash();
             $this->username = $flashMessage->getUsernameValueFlash();
+        } else if ($flashMessage->isNotMatchingPasswordFlash()) {
+            $this->message = $flashMessage->getNotMatchingPasswordFlash();
+            $this->username = $flashMessage->getUsernameValueFlash();
         }
     }
 

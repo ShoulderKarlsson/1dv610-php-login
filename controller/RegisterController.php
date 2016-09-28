@@ -37,10 +37,12 @@ class RegisterController {
         } catch (\error\ShortPasswordException $e) {
             $this->flashMessageModel->setShortPasswordMessage();
             $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
-            // return;
             header('Location: ?register');
+
         } catch (\error\NotMatchingPasswordException $e) {
-            print_r($e->getMessage());
+            $this->flashMessageModel->setNotMathingPasswordMessage();
+            $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+            header('Location: ?register');
 
         } catch (\error\ShortUsernameException $e) {
             print_r($e->getMessage());
