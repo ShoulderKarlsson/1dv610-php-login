@@ -16,4 +16,11 @@ class RegisterController {
     public function presentRegister($isLoggedIn) {
         $this->layoutView->renderRegister($isLoggedIn, $this->registerView, $this->dateTimeView);
     }
+
+    // public function register() {
+    //     // return 'Hello';
+    //     $newUser = $this->registerView->getNewUsercredentials();
+    //     var_dump($newUser);
+    //     return;
+    // }
 }

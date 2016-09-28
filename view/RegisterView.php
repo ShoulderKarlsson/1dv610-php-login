@@ -2,6 +2,8 @@
 
 namespace view;
 
+require_once('model/NewUser.php');
+
 class RegisterView {
     private static $name = 'RegisterView::UserName';
 	private static $password = 'RegisterView::Password';
@@ -11,28 +13,40 @@ class RegisterView {
     private $username = '';
     private static $register_get = 'register';
 
+
+
+
+
+
+
+
+
+    private function getRequestUsername() : string {
+        return $_POST[self::$name];
+    }
+
+    private function getRequestPassword() : string {
+        return $_POST[self::$name];
+    }
+
+    private function getPasswordRepeat() : string {
+        return $_POST[self::$name];
+    }
+
+
+    public function getNewUsercredentials() : \model\NewUser {
+        return new \model\NewUser($this->getRequestUsername(),
+                                  $this->getRequestPassword(),
+                                  $this->getPasswordRepeat());
+    }
+
     public function wantsToAccsessRegister() : bool {
         return isset($_GET[self::$register_get]);
     }
 
-    // public function wantsToRegister() : bool {
-    //
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    public function wantsToRegister() : bool {
+        return isset($_POST[self::$name]) && isset($_POST[self::$password]) && isset($_POST[self::$passwordRepeat]);
+    }
 
     public function response() {
         return '
