@@ -26,8 +26,11 @@ class RegisterView {
             $this->message = $flashMessage->getShortUsernameFlash();
             $this->username = $flashMessage->getUsernameValueFlash();
 
-        } else if ($flashMessage->isBusyUsername()) {
+        } else if ($flashMessage->isBusyUsernameFlash()) {
             $this->message = $flashMessage->getBusyUsernameFlash();
+            $this->username = $flashMessage->getUsernameValueFlash();
+        } else if ($flashMessage->isInvalidFlash()) {
+            $this->message = $flashMessage->getInvalidFlash();
             $this->username = $flashMessage->getUsernameValueFlash();
         }
     }

@@ -50,13 +50,16 @@ class RegisterController {
             $this->redirect();
 
         } catch (\error\BusyUsernameException $e) {
-            // $this->redirect();
             $this->flashMessageModel->setBusyUsernameMessage();
             $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
             $this->redirect();
+        } catch (\error\ InvalidCharactersException $e) {
+            $this->flashMessageModel->setInvalidCharactersMessage();
+            $this->flashMessageModel->setUsernameValueFlash(strip_tags($this->newUser->username));
+            $this->redirect();
         }
 
-        echo 'Nothing happend';
+        echo 'Registration Complete!!';
 
     }
 

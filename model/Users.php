@@ -12,6 +12,8 @@ require_once('exceptions/ShortPasswordException.php');
 require_once('exceptions/ShortUsernameException.php');
 require_once('exceptions/NotMatchingPasswordException.php');
 require_once('exceptions/BusyUsernameException.php');
+require_once('exceptions/InvalidCharactersException.php');
+
 
 class Users {
 
@@ -58,6 +60,17 @@ class Users {
 
 	public function tryToRegisterUser() {
 
+		/**
+		 * Ha en check på ifall både username och password
+		 * är tomma, presentera båda dem felmeddelandena
+		 * Ett extra exception.
+		 *
+		 *
+		 *
+		 * $this->username != strip_tags($this->username)
+		 * Om det är olagliga characters.
+		 */
+
 		if (strlen($this->userCredentials->password) < 6) {
 			throw new \error\ShortPasswordException('Password has too few characters, at least 6 characters.');
 		}
@@ -72,6 +85,10 @@ class Users {
 
 		if ($this->searchForUsername() === true) {
 			throw new \error\BusyUsernameException('User exists, pick another username.');
+		}
+
+		if ($this->userCredentials->username !== strip_tags($this->userCredentials->username)) {
+			throw new \error\InvalidCharactersException('Username contains invalid characters.');
 		}
 	}
 
