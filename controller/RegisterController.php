@@ -59,10 +59,10 @@ class RegisterController {
             $this->redirect();
         }
 
-        $this->users->addNewUser();
-        $this->flashMessageModel->setNewRegisterMessage();
-        $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
-        header('Location: /');
+        // $this->users->addNewUser();
+        // $this->flashMessageModel->setNewRegisterMessage();
+        // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+        // header('Location: /');
     }
 
     private function redirect() {
