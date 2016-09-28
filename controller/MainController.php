@@ -34,24 +34,24 @@ class MainController {
 	}
 
 	public function init() {
-		var_dump($_POST);
-
-		var_dump($this->registerView->wantsToRegister());
+		// var_dump($_POST);
+		//
+		// var_dump($this->registerView->wantsToRegister());
 
 
 		if ($this->loginView->wantsToLogin()) {
-			echo 'Wants to login';
+			// echo 'Wants to login';
 			return $this->loginController->login();
 
 		} else if ($this->loginView->wantsToLogout()) {
-			echo 'Wants to logout';
+			// echo 'Wants to logout';
 			return $this->loginController->logout();
 
 		} else if ($this->registerView->wantsToRegister()) {
 			// $this->registerController->register();
 
 		} else if ($this->registerView->wantsToAccsessRegister()) {
-			echo 'Wants to accsess register';
+			// echo 'Wants to accsess register';
 			if ($this->sessionModel->isLoggedIn()) {
 				header('Location: '. $_SERVER['PHP_SELF']);
 			}
@@ -60,7 +60,7 @@ class MainController {
 
 
 		} else {
-			echo 'else';
+			// echo 'else';
 			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTime);
 		}
 	}
