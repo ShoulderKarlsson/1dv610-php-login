@@ -108,10 +108,13 @@ class Users {
 		}
 
 		return false;
-
 	}
 
 	private function getUsers() {
 		$this->users = $this->userDAL->collectUsers();
+	}
+
+	public function addNewUser() {
+		$this->userDAL->addUser($this->users, $this->userCredentials);
 	}
 }

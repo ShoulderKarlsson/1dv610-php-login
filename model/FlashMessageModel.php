@@ -15,6 +15,8 @@ class FlashMessageModel {
 	private static $notMatchingPasswordFlash = 'FlashMessageModel::notmatching';
 	private static $shortUsernameFlash = 'FlashMessageModel::shortUsername';
 	private static $busyUsernameFlash = 'FlashMessageModel::busyUsername';
+	private static $newUserFlash = 'FlashMessageModel::newUser';
+	private static $newUserMessage = 'Registered new user.';
 	private static $usernameMessage = 'Username is missing';
 	private static $passwordMessage = 'Password is missing';
 	private static $credentialsMessage = 'Wrong name or password';
@@ -58,6 +60,15 @@ class FlashMessageModel {
 		$_SESSION[self::$welcomeFlash] = self::$welcomeMessage;
 	}
 
+	public function setNewRegisterMessage() {
+		$_SESSION[self::$newUserFlash] = self::$newUserMessage;
+	}
+
+	public function getNewUserFlash() : string {
+		$message = $_SESSION[self::$newUserFlash];
+		unset($_SESSION[self::$newUserFlash]);
+		return $message;
+	}
 
 	public function getShortPasswordFlash() : string {
 		$message = $_SESSION[self::$shortPasswordFlash];
@@ -107,6 +118,10 @@ class FlashMessageModel {
 		unset($_SESSION[self::$invalidCharactersFlash]);
 		return $message;
 
+	}
+
+	public function isNewUserFlash() : bool {
+		return isset($_SESSION[self::$newUserFlash]);
 	}
 
 	public function isUsernameFlash() : bool {

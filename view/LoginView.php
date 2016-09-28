@@ -34,6 +34,10 @@ class LoginView {
 
 		}  else if ($flashMessage->isByeFlash()) {
 			$this->message = $flashMessage->getByeFlash();
+
+		} else if ($flashMessage->isNewUserFlash()) {
+			$this->message = $flashMessage->getNewUserFlash();
+			$this->usernameValue = $flashMessage->getUsernameValueFlash();
 		}
 	}
 
