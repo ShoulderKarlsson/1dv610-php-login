@@ -2,4 +2,4 @@
 
 namespace error;
 
-class AlreadyLoggedInException extends Exception {}
+class AlreadyLoggedInException extends \Exception {}
