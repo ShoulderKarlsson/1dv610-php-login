@@ -19,15 +19,7 @@ class RegisterController {
     }
 
     public function register() {
-        /**
-         * Hämta informationen från POST REQUEST.
-         * Kolla så längd på lösenord och användarnamn är korrekt
-         * Kolla så lösenorden stämmer överrens
-         * Använd den class som tillhandahåller alla användare
-         * och sök ifall användarnamnet är upptaget.
-         */
 
-        // Collecting info from POST REQUEST
         $this->newUser = $this->registerView->getNewUsercredentials();
         $this->userDAL = new \model\UserDAL();
         $this->users = new \model\Users($this->userDAL, $this->newUser);
@@ -64,17 +56,10 @@ class RegisterController {
             return;
         }
 
-        // echo 'Valid username!';
-
         $this->users->addNewUser();
         $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
         $this->flashMessageModel->setNewRegisterMessage();
         header('Location: /');
-        // $this->flashMessageModel->setNewRegisterMessage();
-        // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
-        //
-        //
-        // header('Location: /');
     }
 
     private function redirect() {

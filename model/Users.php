@@ -60,13 +60,6 @@ class Users {
 
 	public function tryToRegisterUser() {
 
-		/**
-		 * Ha en check på ifall både username och password
-		 * är tomma, presentera båda dem felmeddelandena
-		 * Ett extra exception.
-		 *
-		 */
-
 		if (strlen($this->userCredentials->password) < 6) {
 			throw new \error\ShortPasswordException('Password has too few characters, at least 6 characters.');
 		}
