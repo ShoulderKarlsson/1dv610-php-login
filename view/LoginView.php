@@ -15,7 +15,7 @@ class LoginView {
 	private static $messageId = 'LoginView::Message';
 	private $message = '';
 	private $usernameValue = '';
-	
+
 	public function __construct(\model\FlashMessageModel $flashMessage) {
 
 		if ($flashMessage->isUsernameFlash()) {
@@ -24,7 +24,7 @@ class LoginView {
 		} else if ($flashMessage->isPasswordFlash()) {
 			$this->usernameValue = $flashMessage->getUsernameValueFlash();
 			$this->message = $flashMessage->getPasswordFlash();
-		
+
 		} else if ($flashMessage->isCredentialsFlash()) {
 			$this->usernameValue = $flashMessage->getUsernameValueFlash();
 			$this->message = $flashMessage->getCredentialsFlash();
@@ -45,7 +45,7 @@ class LoginView {
 	 * @return  void BUT writes to standard output and cookies!
 	 */
 	public function response() {
-		$active = new \model\SessionModel();
+		$active = new \model\SessionModel(); // Change this - send in as argument
 
 		if ($active->isLoggedIn()) {
 			return $this->generateLogoutButtonHTML($this->message);
@@ -101,7 +101,7 @@ class LoginView {
 			</form>
 		';
 	}
-	
+
 	/**
 	* Generate HTML code on the output buffer for the logout button
 	* @param $message, String output message
@@ -109,11 +109,11 @@ class LoginView {
 	*/
 	private function generateLoginFormHTML($message) {
 		return '
-			<form method="post" > 
+			<form method="post" >
 				<fieldset>
 					<legend>Login - enter Username and password</legend>
 					<p id="' . self::$messageId . '">' . $message . '</p>
-					
+
 					<label for="' . self::$name . '">Username :</label>
 					<input type="text" id="' . self::$name . '" name="' . self::$name . '" value="' . $this->usernameValue . '" />
 
@@ -122,7 +122,7 @@ class LoginView {
 
 					<label for="' . self::$keep . '">Keep me logged in  :</label>
 					<input type="checkbox" id="' . self::$keep . '" name="' . self::$keep . '" />
-					
+
 					<input type="submit" name="' . self::$login . '" value="login" />
 				</fieldset>
 			</form>
