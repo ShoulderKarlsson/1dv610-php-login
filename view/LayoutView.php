@@ -26,11 +26,17 @@ class LayoutView {
   }
 
   private function renderIsLoggedIn($isLoggedIn) {
-    if ($isLoggedIn) {
-      return '<h2>Logged in</h2>';
+      $destination = $_SERVER['REQUEST_URI'] === '/?register' ? '<a href="/">Back to login</a>' : '<a href="?register">Register a new user</a>';
+
+      if ($isLoggedIn) {
+          return '
+          <h2>Logged in</h2>
+          ';
+      } else {
+          return '
+          '. $destination .'
+          <h2>Not logged in</h2>
+          ';
+        }
     }
-    else {
-      return '<a href="?register">Register a new user</a><h2>Not logged in</h2>';
-    }
-  }
 }
