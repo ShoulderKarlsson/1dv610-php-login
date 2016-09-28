@@ -38,7 +38,8 @@ class RegisterController {
             $this->flashMessageModel->setShortPasswordMessage();
             $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
             $this->redirect();
-
+            return;
+            
         } catch (\error\NotMatchingPasswordException $e) {
             $this->flashMessageModel->setNotMathingPasswordMessage();
             $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
