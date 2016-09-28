@@ -5,6 +5,10 @@ namespace model;
 
 require_once('SessionModel.php');
 require_once('exceptions/NoSuchUserException.php');
+require_once('exceptions/AlreadyLoggedInException.php');
+require_once('exceptions/UsernameMissingException.php');
+require_once('exceptions/PasswordMissingException.php');
+
 
 class Users {
 
