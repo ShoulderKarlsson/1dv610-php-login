@@ -57,7 +57,7 @@ class Users {
 			throw new \error\NoSuchUserException('Wrong name or password');
 		}
 	}
-
+	
 	public function tryToRegisterUser() {
 
 		if (strlen($this->userCredentials->password) < 6) {
@@ -68,9 +68,9 @@ class Users {
 			throw new \error\NotMatchingPasswordException('Passwords do not match.');
 		}
 
-		if (strlen($this->userCredentials->username) < 3) {
-			throw new \error\ShortUsernameException('Username has too few characters, at least 3 characters.');
-		}
+		// if (strlen($this->userCredentials->username) < 3) {
+		// 	throw new \error\ShortUsernameException('Username has too few characters, at least 3 characters.');
+		// }
 
 		if ($this->searchForUsername() === true) {
 			throw new \error\BusyUsernameException('User exists, pick another username.');
