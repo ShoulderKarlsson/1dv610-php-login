@@ -17,7 +17,13 @@ class CookieDAL {
 		$f_open = fopen(self::$FILE_NAME, 'w');
 		$cookies[] = array('cookiename' => $c->cookieName, 'cookiePassword' => $c->cookiePassword, 'time' => $c->cookieTime);
 		$encode = json_encode($cookies, true);
-		var_dump($encode);
+		fwrite($f_open, $encode);
+		fclose($f_open);
+	}
+
+	public function updatePassword(array $cookies) {
+		$f_open = fopen(self::$FILE_NAME, 'w');
+		$encode = json_encode($cookies, true);
 		fwrite($f_open, $encode);
 		fclose($f_open);
 	}

@@ -15,8 +15,17 @@ class Cookies {
 		$this->getStoredCookies();
 	}
 
-	public function removeCookie() {
-		// Remove the cookie from cookie-db
+	public function updateCookiePassword(\model\Cookie $c) {
+		$c->cookiePassword = $this->generateRandomCookieString();
+		return $c;
+	}
+
+	public function replaceOldCookie($newCookie, $oldPw) {
+		foreach($this->storedCookies as $cookie) {
+			if ($cookie['cookiePassword'] == $oldPw) {
+				echo 'Found cookie in db!';
+			}
+		}
 	}
 
 	public function getCookie() : array {
@@ -52,6 +61,4 @@ class Cookies {
 
 		return $secret;
 	}
-
-
 }

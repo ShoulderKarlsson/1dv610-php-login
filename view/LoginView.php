@@ -107,6 +107,13 @@ class LoginView {
 		return $_COOKIE[self::$cookiePassword];
 	}
 
+	public function getStoredCookieInfo() {
+		$nc = new \model\Cookie($_COOKIE[self::$cookieName]);
+		$nc->cookiePassword = $_COOKIE[self::$cookiePassword];
+
+		return $nc;
+	}
+
 	public function wantsToLogin() : bool {
 		return isset($_POST[self::$password]) || isset($_POST[self::$name]);
 	}
@@ -128,6 +135,7 @@ class LoginView {
 		setcookie(self::$cookieName, $c->cookieName, $duration);
 		setcookie(self::$cookiePassword, $c->cookiePassword, $duration);
 	}
+
 
 	public function removeCookies() {
 		setcookie(self::$cookieName, '', time() - 10);

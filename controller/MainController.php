@@ -10,6 +10,8 @@ require_once("controller/LoginController.php");
 require_once('controller/RegisterController.php');
 require_once('model/FlashMessageModel.php');
 require_once('model/SessionModel.php');
+require_once('model/Cookies.php');
+require_once('model/CookieDAL.php');
 
 
 class MainController {
@@ -58,8 +60,40 @@ class MainController {
 			$this->loginController->tryLoginWithCookies();
 			
 		} else {
-
+			$this->updateCookiePassword();
 			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTime);
+		}
+	}
+
+	private function updateCookiePassword() {
+		$cd = new \model\CookieDAL();
+		$c = new \model\Cookies($cd);
+
+		if ($this->loginView->isCookieSet()) {
+			/**
+			 * Hämta gamla infon om kakan -
+			 * hämta ett nytt lösen - 
+			 * Spara ned det nya på klienten 
+			 * Ersätt det gamla i databasen
+			 */
+			
+			$oldCookie = $this->loginView->getStoredCookieInfo();
+			$placeholder = $oldCookie->cookiePassword;
+			$newCookie = $c->updateCookiePassword($oldCookie);
+
+
+			$c->saveCookie($newCookie);
+			$this->loginView->setClientCookie($newCookie);
+
+
+			// $oldCookie = $this->loginView->getStoredCookieInfo();
+			// $placeholder = $oldCookie->cookiePassword;
+			// $newCookie = $c->updateCookiePassword($oldCookie);
+
+
+			// $this->loginView->setClientCookie($newCookie);
+			// $c->replaceOldCookie($newCookie, $placeholder);
+			// $c->saveCookie($newCookie);
 		}
 	}
 }
