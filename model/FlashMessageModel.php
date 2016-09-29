@@ -3,7 +3,6 @@
 namespace model;
 
 class FlashMessageModel {
-
 	private static $usernameFlash = 'FlashMessageModel::usernameFlash';
 	private static $passwordFlash = 'FlashMessageModel::passwordFlash';
 	private static $usernameValueFlash = 'FlashMessageModel::usernameValue';
@@ -15,7 +14,9 @@ class FlashMessageModel {
 	private static $notMatchingPasswordFlash = 'FlashMessageModel::notmatching';
 	private static $shortUsernameFlash = 'FlashMessageModel::shortUsername';
 	private static $busyUsernameFlash = 'FlashMessageModel::busyUsername';
+	private static $cookieRememberFlash = 'FlashMessageModel::cookieRemember';
 	private static $newUserFlash = 'FlashMessageModel::newUser';
+	private static $cookieRememberMessage = 'Welcome and you will be remembered.';
 	private static $newUserMessage = 'Registered new user.';
 	private static $usernameMessage = 'Username is missing';
 	private static $passwordMessage = 'Password is missing';
@@ -62,6 +63,16 @@ class FlashMessageModel {
 
 	public function setNewRegisterMessage() {
 		$_SESSION[self::$newUserFlash] = self::$newUserMessage;
+	}
+
+	public function setCookieWelcomeFlash() {
+		$_SESSION[self::$cookieRememberFlash] = self::$cookieRememberMessage;
+	}
+
+	public function getCookieRememberFlash() : string {
+		$message = $_SESSION[self::$cookieRememberFlash];
+		unset($_SESSION[self::$cookieRememberFlash]);
+		return $message;
 	}
 
 	public function getNewUserFlash() : string {
@@ -162,6 +173,10 @@ class FlashMessageModel {
 
 	public function isInvalidFlash() : bool {
 		return isset($_SESSION[self::$invalidCharactersFlash]);
+	}
+
+	public function isCookieRemeberFlash() : bool {
+		return isset($_SESSION[self::$cookieRememberFlash]);
 	}
 
 	public function setShortUsernameMessage() {

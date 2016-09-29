@@ -3,6 +3,8 @@
 namespace view;
 
 require_once('model/User.php');
+require_once('model/Cookie.php');
+
 
 class LoginView {
 	private static $login = 'LoginView::Login';
@@ -38,6 +40,9 @@ class LoginView {
 		} else if ($flashMessage->isNewUserFlash()) {
 			$this->message = $flashMessage->getNewUserFlash();
 			$this->usernameValue = $flashMessage->getUsernameValueFlash();
+
+		} else if ($flashMessage->isCookieRemeberFlash()) {
+			$this->message = $flashMessage->getCookieRememberFlash();
 		}
 	}
 
@@ -51,6 +56,7 @@ class LoginView {
 	public function response() {
 		$active = new \model\SessionModel(); // Change this - send in as argument
 
+
 		if ($active->isLoggedIn()) {
 			return $this->generateLogoutButtonHTML($this->message);
 		} else {
@@ -61,6 +67,10 @@ class LoginView {
 
 	public function getUserInformation() {
 		return new \model\User($this->getRequestUsername(), $this->getRequestPassword());
+	}
+
+	public function getCookieInfo() {
+		return new \model\Cookie($this->getRequestUsername());
 	}
 
 	// If something goes wrong with tests and flashMessages - it might be these two
@@ -86,6 +96,14 @@ class LoginView {
 		return $_POST[self::$password];
 	}
 
+	private function getCookiename() : string {
+		return $_COOKIE[self::$cookieName];
+	}
+
+	private function getCookiePassword() : string {
+		return $_COOKIE[self::$cookiePassword];
+	}
+
 	public function wantsToLogin() : bool {
 		return isset($_POST[self::$password]) || isset($_POST[self::$name]);
 	}
@@ -96,6 +114,16 @@ class LoginView {
 
 	public function wantsToStoreSession() : bool {
 		return isset($_POST[self::$keep]);
+	}
+
+	public function isCookieSet() : bool {
+		return isset($_COOKIE[self::$cookieName]) && isset($_COOKIE[self::$cookiePassword]);
+	}
+
+	public function setClientCookie(\model\Cookie $c) {
+		$duration = time() + 3600;
+		setcookie(self::$cookieName, $c->cookieName, $duration);
+		setcookie(self::$cookiePassword, $c->cookiePassword, $duration);
 	}
 
 	/**

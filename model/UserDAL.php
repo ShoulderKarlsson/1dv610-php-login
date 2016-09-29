@@ -5,9 +5,6 @@ namespace model;
 class UserDAL {
 
 	private static $FILE_NAME = 'db/accounts.json';
-	private static $COOKIE_FILE_NAME = 'db/cookiefile.json';
-
-
 
 	public function collectUsers() : array {
 		$f_open = fopen(self::$FILE_NAME, 'r');
@@ -21,9 +18,5 @@ class UserDAL {
 		$encode = json_encode($users, true);
 		fwrite($f_open, $encode);
 		fclose($f_open);
-	}
-
-	public function getCookie() {
-		// Not sure?
 	}
 }
