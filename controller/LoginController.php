@@ -36,6 +36,13 @@ class LoginController {
 			$this->users = new \model\Users($this->userDAL, $this->newUser);
 			$this->users->tryToLoginUser($this->sessionModel);
 			$this->sessionModel->login();
+
+			// if ($this->loginView->wantsToStoreSession()) {
+				
+			// }
+
+
+
 			$this->flashMessage->setWelcomeFlash();
 			return header('Location: '.$_SERVER['PHP_SELF']);
 

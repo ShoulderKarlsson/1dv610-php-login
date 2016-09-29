@@ -35,6 +35,8 @@ class MainController {
 
 	public function init() {
 
+
+
 		if ($this->loginView->wantsToLogin()) {
 			return $this->loginController->login();
 

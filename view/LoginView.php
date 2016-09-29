@@ -63,14 +63,16 @@ class LoginView {
 		return new \model\User($this->getRequestUsername(), $this->getRequestPassword());
 	}
 
-	public function setUsernameFlash(\model\FlashMessageModel $flashMessage) {
-		$flashMessage->setUsernameMessage();
-	}
+	// If something goes wrong with tests and flashMessages - it might be these two
+	// If so is the case, change it.
+	// public function setUsernameFlash(\model\FlashMessageModel $flashMessage) {
+	// 	$flashMessage->setUsernameMessage();
+	// }
 
-	public function setPasswordFlash(\model\FlashMessageModel $flashMessage) {
-		$flashMessage->setPasswordMessage();
-		$flashMessage->setUsernameValueFlash($this->getRequestUsername());
-	}
+	// public function setPasswordFlash(\model\FlashMessageModel $flashMessage) {
+	// 	$flashMessage->setPasswordMessage();
+	// 	$flashMessage->setUsernameValueFlash($this->getRequestUsername());
+	// }
 
 	public function setUsernameValue() {
 		$this->usernameValue = $this->getRequestUsername();
@@ -90,6 +92,10 @@ class LoginView {
 
 	public function wantsToLogout() : bool {
 		return isset($_POST[self::$logout]);
+	}
+
+	public function wantsToStoreSession() : bool {
+		return isset($_POST[self::$keep]);
 	}
 
 	/**
