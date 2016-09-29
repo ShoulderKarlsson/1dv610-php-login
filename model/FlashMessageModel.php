@@ -17,6 +17,8 @@ class FlashMessageModel {
 	private static $cookieRememberFlash = 'FlashMessageModel::cookieRemember';
 	private static $newUserFlash = 'FlashMessageModel::newUser';
 	private static $cookieRememberMessage = 'Welcome and you will be remembered.';
+	private static $welcomeBackFlash = 'FlashMessageModel::welcomeBack';
+	private static $welcomeBackMessage = 'Welcome back with cookies.';
 	private static $newUserMessage = 'Registered new user.';
 	private static $usernameMessage = 'Username is missing';
 	private static $passwordMessage = 'Password is missing';
@@ -61,12 +63,22 @@ class FlashMessageModel {
 		$_SESSION[self::$welcomeFlash] = self::$welcomeMessage;
 	}
 
+	public function setWelcomeBackFlash() {
+		$_SESSION[self::$welcomeBackFlash] = self::$welcomeBackMessage;
+	}
+
 	public function setNewRegisterMessage() {
 		$_SESSION[self::$newUserFlash] = self::$newUserMessage;
 	}
 
 	public function setCookieWelcomeFlash() {
 		$_SESSION[self::$cookieRememberFlash] = self::$cookieRememberMessage;
+	}
+
+	public function getWelcomeBackFlash() : string {
+		$message = $_SESSION[self::$welcomeBackFlash];
+		unset($_SESSION[self::$welcomeBackFlash]);
+		return $message;
 	}
 
 	public function getCookieRememberFlash() : string {
@@ -128,7 +140,10 @@ class FlashMessageModel {
 		$message = $_SESSION[self::$invalidCharactersFlash];
 		unset($_SESSION[self::$invalidCharactersFlash]);
 		return $message;
+	}
 
+	public function isWelcomeBackFlash() : bool { 
+		return isset($_SESSION[self::$welcomeBackFlash]); 
 	}
 
 	public function isNewUserFlash() : bool {

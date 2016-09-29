@@ -28,6 +28,16 @@ class Cookies {
 		$this->cookieDAL->saveCookie($c, $this->storedCookies);
 	}
 
+	public function isStored(string $cookiePW) : bool {
+		foreach($this->storedCookies as $cookie) {
+			if ($cookie['cookiePassword'] === $cookiePW && $cookie['time'] > time()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private function getStoredCookies() {
 		$this->storedCookies = $this->cookieDAL->collectCookies();
 	}
@@ -42,4 +52,6 @@ class Cookies {
 
 		return $secret;
 	}
+
+
 }

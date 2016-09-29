@@ -43,6 +43,9 @@ class LoginView {
 
 		} else if ($flashMessage->isCookieRemeberFlash()) {
 			$this->message = $flashMessage->getCookieRememberFlash();
+
+		} else if ($flashMessage->isWelcomeBackFlash()) {
+			$this->message = $flashMessage->getWelcomeBackFlash();
 		}
 	}
 
@@ -100,7 +103,7 @@ class LoginView {
 		return $_COOKIE[self::$cookieName];
 	}
 
-	private function getCookiePassword() : string {
+	public function getCookiePassword() : string {
 		return $_COOKIE[self::$cookiePassword];
 	}
 
@@ -124,6 +127,11 @@ class LoginView {
 		$duration = time() + 3600;
 		setcookie(self::$cookieName, $c->cookieName, $duration);
 		setcookie(self::$cookiePassword, $c->cookiePassword, $duration);
+	}
+
+	public function removeCookies() {
+		setcookie(self::$cookieName, '', time() - 10);
+		setcookie(self::$cookiePassword, '', time() - 10);
 	}
 
 	/**

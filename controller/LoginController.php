@@ -31,6 +31,8 @@ class LoginController {
 		$this->layoutView = $layoutView;
 		$this->flashMessage = $flashMessage;
 		$this->sessionModel = new \model\SessionModel();
+		$this->cookieDAL = new \model\CookieDAL();
+		$this->cookies = new \model\Cookies($this->cookieDAL);
 	}
 
 	public function login() {
@@ -93,13 +95,26 @@ class LoginController {
 			$this->flashMessage->setByeFlash();
 		}
 
+		if ($this->loginView->isCookieSet()) {
+			$this->loginView->removeCookies();
+		}
+
 		header('Location: '.$_SERVER['PHP_SELF']);
 	}
 
-	private function setCookie() {
-		$this->cookieDAL = new \model\CookieDAL();
-		$this->cookies = new \model\Cookies($this->cookieDAL);
+	public function tryLoginWithCookies() {
+		$cookiePW = $this->loginView->getCookiePassword();
 
+		if ($this->cookies->isStored($cookiePW) && $this->sessionModel->isLoggedIn() === false) {
+			$this->flashMessage->setWelcomeBackFlash();
+			$this->sessionModel->login();
+			header('Location: '.$_SERVER['PHP_SELF']);
+		} else {
+			$this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTimeView);
+		}
+	}
+
+	private function setCookie() {
 		$cookie = $this->loginView->getCookieInfo();
 		$this->cookies->saveCookie($cookie);
 		$this->loginView->setClientCookie($cookie);

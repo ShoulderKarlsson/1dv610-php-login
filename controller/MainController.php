@@ -47,13 +47,18 @@ class MainController {
 			return $this->registerController->register();
 
 		} else if ($this->registerView->wantsToAccsessRegister()) {
+
 			if ($this->sessionModel->isLoggedIn()) {
 				header('Location: '. $_SERVER['PHP_SELF']);
 			}
 
 			$this->registerController->presentRegister($this->sessionModel->isLoggedIn());
 
+		} else if ($this->loginView->isCookieSet() && $this->sessionModel->isLoggedIn() === false) {
+			$this->loginController->tryLoginWithCookies();
+			
 		} else {
+
 			return $this->layoutView->render($this->sessionModel->isLoggedIn(), $this->loginView, $this->dateTime);
 		}
 	}
