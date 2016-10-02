@@ -13,6 +13,7 @@ class Cookies {
 	public function __construct(CookieDAL $cd) {
 		$this->cookieDAL = $cd;
 		$this->getStoredCookies();
+
 	}
 
 	public function updateCookiePassword(\model\Cookie $c) {
@@ -20,12 +21,16 @@ class Cookies {
 		return $c;
 	}
 
-	public function replaceOldCookie($newCookie, $oldPw) {
+	public function replaceOldCookie(\model\Cookie $newCookie, $oldPw) {
+		$temp = array();
 		foreach($this->storedCookies as $cookie) {
-			if ($cookie['cookiePassword'] == $oldPw) {
-				echo 'Found cookie in db!';
+			if ($cookie['cookiePassword'] !== $oldPw) {
+				$temp[] = $cookie;
 			}
 		}
+		$temp[] = $newCookie;
+
+		return $temp;
 	}
 
 	public function getCookie() : array {
@@ -37,9 +42,14 @@ class Cookies {
 		$this->cookieDAL->saveCookie($c, $this->storedCookies);
 	}
 
+	public function saveNewCookieList(array $list) {
+		$this->cookieDAL->updatePassword($list);
+	}
+
 	public function isStored(string $cookiePW) : bool {
 		foreach($this->storedCookies as $cookie) {
-			if ($cookie['cookiePassword'] === $cookiePW && $cookie['time'] > time()) {
+			// if ($cookie['cookiePassword'] === $cookiePW && $cookie['timeime'] > time()) {
+			if ($cookie['cookiePassword'] === $cookiePW && $cookie['cookieTime'] > time()) {
 				return true;
 			}
 		}

@@ -70,30 +70,12 @@ class MainController {
 		$c = new \model\Cookies($cd);
 
 		if ($this->loginView->isCookieSet()) {
-			/**
-			 * Hämta gamla infon om kakan -
-			 * hämta ett nytt lösen - 
-			 * Spara ned det nya på klienten 
-			 * Ersätt det gamla i databasen
-			 */
-			
-			$oldCookie = $this->loginView->getStoredCookieInfo();
-			$placeholder = $oldCookie->cookiePassword;
-			$newCookie = $c->updateCookiePassword($oldCookie);
-
-
-			$c->saveCookie($newCookie);
+			$storedCookie = $this->loginView->getStoredCookieInfo();
+			$oldpw = $storedCookie->cookiePassword;
+			$newCookie = $c->updateCookiePassword($storedCookie);
+			$newList = $c->replaceOldCookie($newCookie, $oldpw);
 			$this->loginView->setClientCookie($newCookie);
-
-
-			// $oldCookie = $this->loginView->getStoredCookieInfo();
-			// $placeholder = $oldCookie->cookiePassword;
-			// $newCookie = $c->updateCookiePassword($oldCookie);
-
-
-			// $this->loginView->setClientCookie($newCookie);
-			// $c->replaceOldCookie($newCookie, $placeholder);
-			// $c->saveCookie($newCookie);
+			$c->saveNewCookieList($newList);
 		}
 	}
 }
