@@ -40,12 +40,8 @@ class LoginController {
 		$this->newUser = $this->loginView->getUserinformation();
 		$this->userDAL = new \model\UserDAL();
 		$this->users = new \model\Users($this->userDAL, $this->newUser);
-		
+
 		try {
-			// $this->newUser = $this->loginView->getUserinformation();
-			// $this->userDAL = new \model\UserDAL();
-			// $this->users = new \model\Users($this->userDAL, $this->newUser);
-			
 			$this->users->tryToLoginUser($this->sessionModel);
 
 			if ($this->loginView->wantsToStoreSession()) {
@@ -56,28 +52,20 @@ class LoginController {
 				$this->flashMessage->setWelcomeFlash();
 			}
 
-
-			// $this->sessionModel->login();
-			// $this->flashMessage->setWelcomeFlash();
-			// return header('Location: '.$_SERVER['PHP_SELF']);
-
 		} catch (\error\UsernameMissingException $e) {
 			$this->flashMessage->setUsernameMessage();
-			// header('Location: '.$_SERVER['PHP_SELF']);
 
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch(\error\PasswordMissingException $e) {
 			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setPasswordMessage();
-			// header('Location: '.$_SERVER['PHP_SELF']);
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 
 		} catch (\error\NoSuchUserException $e) {
 			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setWrongCredentialsMessage();
-			// header('Location: '.$_SERVER['PHP_SELF']);
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch (\error\AlreadyLoggedInException $e) {
@@ -97,6 +85,8 @@ class LoginController {
 
 		if ($this->loginView->isCookieSet()) {
 			$this->loginView->removeCookies();
+
+			$this->cookies->removeCookies($this->loginView->getStoredCookieInfo());
 		}
 
 		header('Location: '.$_SERVER['PHP_SELF']);

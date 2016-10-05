@@ -34,7 +34,7 @@ class Cookies {
 	}
 
 	public function getCookie() : array {
-		$this->cookieDAL->collectCookies(); 
+		$this->cookieDAL->collectCookies();
 	}
 
 	public function saveCookie(\model\Cookie $c) {
@@ -48,13 +48,23 @@ class Cookies {
 
 	public function isStored(string $cookiePW) : bool {
 		foreach($this->storedCookies as $cookie) {
-			// if ($cookie['cookiePassword'] === $cookiePW && $cookie['timeime'] > time()) {
 			if ($cookie['cookiePassword'] === $cookiePW && $cookie['cookieTime'] > time()) {
 				return true;
 			}
 		}
 
 		return false;
+	}
+
+	public function removeCookies(\model\Cookie $c) {
+		$temp = array();
+		foreach($this->storedCookies as $cookie) {
+			if ($cookie['cookiePassword'] !== $c->cookiePassword) {
+				$temp[] = $cookie;
+			}
+		}
+		
+		$this->cookieDAL->updatePassword($temp);
 	}
 
 	private function getStoredCookies() {
@@ -65,8 +75,8 @@ class Cookies {
 		$tempString = password_hash('super_string_deluxe_o_y_e_a', PASSWORD_BCRYPT);
 		$secret = '';
 
-		for ($i=0; $i < 50; $i++) { 
-			$secret .= rand(0, strlen($tempString) - 1);
+		for ($i=0; $i < 50; $i++) {
+			$secret .= $tempString[rand(0, strlen($tempString) - 1)];
 		}
 
 		return $secret;
