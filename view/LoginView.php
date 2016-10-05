@@ -20,6 +20,21 @@ class LoginView {
 
 	public function __construct(\model\FlashMessageModel $flashMessage) {
 
+		if ($flashMessage->isLoginFlashSet()) {
+			$this->message = $flashMessage->getLoginFlashMessage();
+
+			if ($flashMessage->isLoginUsername()) {
+				$this->usernameValue = $flashMessage->getLoginUsernameFlash();
+			}
+		}
+		// if ($flashMessage->isFlashSet()) {
+		// 	$this->message = $flashMessage->getFlashMessage();
+		//
+		// 	if ($flashMessage->isUsernameSet()) {
+		// 		$this->usernameValue = $flashMessage->getUsernameValueFlash();
+		// 	}
+		// }
+/*
 		if ($flashMessage->isUsernameFlash()) {
 			$this->message = $flashMessage->getUsernameFlash();
 
@@ -47,8 +62,8 @@ class LoginView {
 		} else if ($flashMessage->isWelcomeBackFlash()) {
 			$this->message = $flashMessage->getWelcomeBackFlash();
 		}
+		*/
 	}
-
 	/**
 	 * Create HTTP response
 	 *

@@ -14,6 +14,19 @@ class RegisterView {
     private static $register_get = 'register';
 
     public function __construct(\model\FlashMessageModel $flashMessage) {
+        if ($flashMessage->isRegisterFlashSet()) {
+			$this->message = $flashMessage->getRegisterFlashMessage();
+
+            if ($flashMessage->isRegisterUsername()) {
+                $this->username = $flashMessage->getRegisterUsernameFlash();
+            }
+
+			// if ($flashMessage->isUsernameSet()) {
+			// 	$this->username = $flashMessage->getUsernameValueFlash();
+			// }
+		}
+
+    /*
         if ($flashMessage->isShortPasswordFlash()) {
             $this->message = $flashMessage->getShortPasswordFlash();
             $this->username = $flashMessage->getUsernameValueFlash();
@@ -33,7 +46,9 @@ class RegisterView {
             $this->message = $flashMessage->getInvalidFlash();
             $this->username = $flashMessage->getUsernameValueFlash();
         }
+        */
     }
+
 
     private function getRequestUsername() : string {
         return $_POST[self::$name];

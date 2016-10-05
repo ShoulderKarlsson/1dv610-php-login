@@ -54,17 +54,17 @@ class LoginController {
 
 		} catch (\error\UsernameMissingException $e) {
 			$this->flashMessage->setUsernameMessage();
-
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch(\error\PasswordMissingException $e) {
-			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
+			// $this->flashMessage->setUsernameValueFlash($this->newUser->username);
+			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
 			$this->flashMessage->setPasswordMessage();
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
-
 		} catch (\error\NoSuchUserException $e) {
-			$this->flashMessage->setUsernameValueFlash($this->newUser->username);
+			// $this->flashMessage->setUsernameValueFlash($this->newUser->username);
+			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
 			$this->flashMessage->setWrongCredentialsMessage();
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
@@ -85,7 +85,6 @@ class LoginController {
 
 		if ($this->loginView->isCookieSet()) {
 			$this->loginView->removeCookies();
-
 			$this->cookies->removeCookies($this->loginView->getStoredCookieInfo());
 		}
 

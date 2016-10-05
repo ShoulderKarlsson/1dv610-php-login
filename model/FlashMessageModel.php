@@ -18,6 +18,7 @@ class FlashMessageModel {
 	private static $newUserFlash = 'FlashMessageModel::newUser';
 	private static $cookieRememberMessage = 'Welcome and you will be remembered.';
 	private static $welcomeBackFlash = 'FlashMessageModel::welcomeBack';
+
 	private static $welcomeBackMessage = 'Welcome back with cookies.';
 	private static $newUserMessage = 'Registered new user.';
 	private static $usernameMessage = 'Username is missing';
@@ -31,50 +32,157 @@ class FlashMessageModel {
 	private static $busyUsernameMessage = 'User exists, pick another username.';
 	private static $invalidCharactersMessage = 'Username contains invalid characters.';
 
+	private static $loginUsernameValue = 'FlashMessageModel::LoginUsername';
+	private static $registerUsernameValue = 'flashMessage::RegisterUsername';
+	private static $loginFlashMessage = 'FlashMessageModel::LoginFlashMessage';
+	private static $registerFlashMessage = 'FlashMessageModel::RegisterFlashMessage';
+
+	public function isLoginUsername() : bool {
+		return isset($_SESSION[self::$loginUsernameValue]);
+	}
+
+	public function isRegisterUsername() : bool {
+		return isset($_SESSION[self::$registerUsernameValue]);
+	}
+
+	public function isLoginFlashSet() : bool {
+		return isset($_SESSION[self::$loginFlashMessage]);
+	}
+
+	public function isRegisterFlashSet() : bool {
+		return isset($_SESSION[self::$registerFlashMessage]);
+	}
+
+	public function getLoginFlashMessage() : string {
+		$message = $_SESSION[self::$loginFlashMessage];
+		unset($_SESSION[self::$loginFlashMessage]);
+		return $message;
+	}
+
+	public function getRegisterFlashMessage() : string {
+		$message = $_SESSION[self::$registerFlashMessage];
+		unset($_SESSION[self::$registerFlashMessage]);
+		return $message;
+	}
+
+	public function getRegisterUsernameFlash() : string {
+		$value = $_SESSION[self::$registerUsernameValue];
+		unset($_SESSION[self::$registerUsernameValue]);
+		return $value;
+	}
+
+	public function getLoginUsernameFlash() : string {
+		$value = $_SESSION[self::$loginUsernameValue];
+		unset($_SESSION[self::$loginUsernameValue]);
+		return $value;
+	}
+
+	public function setRegisterUsernameFlash(string $value) {
+		$_SESSION[self::$registerUsernameValue] = $value;
+	}
+
+	public function setLoginUsernameFlash(string $value) {
+		$_SESSION[self::$loginUsernameValue] = $value;
+	}
+
 	public function setUsernameMessage() {
-		$_SESSION[self::$usernameFlash] = self::$usernameMessage;
+		$_SESSION[self::$loginFlashMessage] = self::$usernameMessage;
 	}
 
-	public function setPasswordMessage() {
-		$_SESSION[self::$passwordFlash] = self::$passwordMessage;
-	}
-
-	public function setWrongCredentialsMessage() {
-		$_SESSION[self::$credentialsFlash] = self::$credentialsMessage;
-	}
 
 	public function setShortPasswordMessage() {
-		$_SESSION[self::$shortPasswordFlash] = self::$shortPasswordMessage;
+		$_SESSION[self::$registerFlashMessage] = self::$shortPasswordMessage;
 	}
 
 	public function setBusyUsernameMessage() {
-		$_SESSION[self::$busyUsernameFlash] = self::$busyUsernameMessage;
+		$_SESSION[self::$registerFlashMessage] = self::$busyUsernameMessage;
 	}
 
 	public function setInvalidCharactersMessage() {
-		$_SESSION[self::$invalidCharactersFlash] = self::$invalidCharactersMessage;
+		$_SESSION[self::$registerFlashMessage] = self::$invalidCharactersMessage;
 	}
 
 	public function setNotMathingPasswordMessage() {
-		$_SESSION[self::$notMatchingPasswordFlash] = self::$notMatchingPasswordMessage;
-	}
-
-	public function setWelcomeFlash() {
-		$_SESSION[self::$welcomeFlash] = self::$welcomeMessage;
-	}
-
-	public function setWelcomeBackFlash() {
-		$_SESSION[self::$welcomeBackFlash] = self::$welcomeBackMessage;
+		$_SESSION[self::$registerFlashMessage] = self::$notMatchingPasswordMessage;
 	}
 
 	public function setNewRegisterMessage() {
-		$_SESSION[self::$newUserFlash] = self::$newUserMessage;
+		$_SESSION[self::$loginFlashMessage] = self::$newUserMessage;
 	}
+
+	public function setShortUsernameMessage() {
+		$_SESSION[self::$registerFlashMessage] = self::$shortUsernameMessage;
+	}
+
+	public function setPasswordMessage() {
+		$_SESSION[self::$loginFlashMessage] = self::$passwordMessage;
+	}
+
+	public function setWrongCredentialsMessage() {
+		$_SESSION[self::$loginFlashMessage] = self::$credentialsMessage;
+	}
+
+	public function setWelcomeFlash() {
+		$_SESSION[self::$loginFlashMessage] = self::$welcomeMessage;
+	}
+
+	public function setWelcomeBackFlash() {
+		$_SESSION[self::$loginUsernameValue] = self::$welcomeBackMessage;
+	}
+
 
 	public function setCookieWelcomeFlash() {
-		$_SESSION[self::$cookieRememberFlash] = self::$cookieRememberMessage;
+		$_SESSION[self::$loginFlashMessage] = self::$cookieRememberMessage;
 	}
 
+
+
+
+	// public function setUsernameMessage() {
+	// 	$_SESSION[self::$usernameFlash] = self::$usernameMessage;
+	// }
+	//
+	// public function setPasswordMessage() {
+	// 	$_SESSION[self::$passwordFlash] = self::$passwordMessage;
+	// }
+	//
+	// public function setWrongCredentialsMessage() {
+	// 	$_SESSION[self::$credentialsFlash] = self::$credentialsMessage;
+	// }
+	//
+	// public function setShortPasswordMessage() {
+	// 	$_SESSION[self::$shortPasswordFlash] = self::$shortPasswordMessage;
+	// }
+	//
+	// public function setBusyUsernameMessage() {
+	// 	$_SESSION[self::$busyUsernameFlash] = self::$busyUsernameMessage;
+	// }
+	//
+	// public function setInvalidCharactersMessage() {
+	// 	$_SESSION[self::$invalidCharactersFlash] = self::$invalidCharactersMessage;
+	// }
+	//
+	// public function setNotMathingPasswordMessage() {
+	// 	$_SESSION[self::$notMatchingPasswordFlash] = self::$notMatchingPasswordMessage;
+	// }
+	//
+	// public function setWelcomeFlash() {
+	// 	$_SESSION[self::$welcomeFlash] = self::$welcomeMessage;
+	// }
+	//
+	// public function setWelcomeBackFlash() {
+	// 	$_SESSION[self::$welcomeBackFlash] = self::$welcomeBackMessage;
+	// }
+	//
+	// public function setNewRegisterMessage() {
+	// 	$_SESSION[self::$newUserFlash] = self::$newUserMessage;
+	// }
+	//
+	// public function setCookieWelcomeFlash() {
+	// 	$_SESSION[self::$cookieRememberFlash] = self::$cookieRememberMessage;
+	// }
+
+	/*
 	public function getWelcomeBackFlash() : string {
 		$message = $_SESSION[self::$welcomeBackFlash];
 		unset($_SESSION[self::$welcomeBackFlash]);
@@ -142,17 +250,17 @@ class FlashMessageModel {
 		return $message;
 	}
 
-	public function isWelcomeBackFlash() : bool { 
-		return isset($_SESSION[self::$welcomeBackFlash]); 
+	public function isWelcomeBackFlash() : bool {
+		return isset($_SESSION[self::$welcomeBackFlash]);
 	}
 
 	public function isNewUserFlash() : bool {
 		return isset($_SESSION[self::$newUserFlash]);
 	}
 
-	public function isUsernameFlash() : bool {
-		return isset($_SESSION[self::$usernameFlash]);
-	}
+	// public function isUsernameFlash() : bool {
+	// 	return isset($_SESSION[self::$usernameFlash]);
+	// }
 
 	public function isPasswordFlash() : bool {
 		return isset($_SESSION[self::$passwordFlash]);
@@ -198,11 +306,11 @@ class FlashMessageModel {
 		$_SESSION[self::$shortUsernameFlash] = self::$shortUsernameMessage;
 	}
 
-	public function getUsernameValueFlash() : string {
-		$value = $_SESSION[self::$usernameValueFlash];
-		unset($_SESSION[self::$usernameValueFlash]);
-		return $value;
-	}
+	// public function getUsernameValueFlash() : string {
+	// 	$value = $_SESSION[self::$usernameValueFlash];
+	// 	unset($_SESSION[self::$usernameValueFlash]);
+	// 	return $value;
+	// }
 
 	public function getWelcomeFlash() : string {
 		$message = $_SESSION[self::$welcomeFlash];
@@ -219,8 +327,9 @@ class FlashMessageModel {
 		unset($_SESSION[self::$byeFlash]);
 		return $message;
 	}
+	*/
 
-	public function setUsernameValueFlash(string $username) {
-		$_SESSION[self::$usernameValueFlash] = $username;
-	}
+	// public function setUsernameValueFlash(string $username) {
+	// 	$_SESSION[self::$usernameValueFlash] = $username;
+	// }
 }

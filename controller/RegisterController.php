@@ -28,36 +28,41 @@ class RegisterController {
             $this->users->tryToRegisterUser();
         } catch (\error\ShortPasswordException $e) {
             $this->flashMessageModel->setShortPasswordMessage();
-            $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+            $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
+            // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
             $this->redirect();
             return;
 
         } catch (\error\NotMatchingPasswordException $e) {
             $this->flashMessageModel->setNotMathingPasswordMessage();
-            $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+            $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
+            // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
             $this->redirect();
             return;
         } catch (\error\ShortUsernameException $e) {
             $this->flashMessageModel->setShortUsernameMessage();
-            $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+            $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
+            // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
             $this->redirect();
             return;
 
         } catch (\error\BusyUsernameException $e) {
             $this->flashMessageModel->setBusyUsernameMessage();
-            $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+            $this->flashMessageModel->setRegisterUsernameFlash($this->newUser->username);
+            // $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
             $this->redirect();
             return;
 
         } catch (\error\ InvalidCharactersException $e) {
             $this->flashMessageModel->setInvalidCharactersMessage();
-            $this->flashMessageModel->setUsernameValueFlash(strip_tags($this->newUser->username));
+            $this->flashMessageModel->setRegisterUsernameFlash(strip_tags($this->newUser->username));
+            // $this->flashMessageModel->setUsernameValueFlash(strip_tags($this->newUser->username));
             $this->redirect();
             return;
         }
 
         $this->users->addNewUser();
-        $this->flashMessageModel->setUsernameValueFlash($this->newUser->username);
+        $this->flashMessageModel->setLoginUsernameFlash($this->newUser->username);
         $this->flashMessageModel->setNewRegisterMessage();
         header('Location: /');
     }
