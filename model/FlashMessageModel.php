@@ -3,6 +3,7 @@
 namespace model;
 
 class FlashMessageModel {
+	/*
 	private static $usernameFlash = 'FlashMessageModel::usernameFlash';
 	private static $passwordFlash = 'FlashMessageModel::passwordFlash';
 	private static $usernameValueFlash = 'FlashMessageModel::usernameValue';
@@ -18,6 +19,7 @@ class FlashMessageModel {
 	private static $newUserFlash = 'FlashMessageModel::newUser';
 	private static $cookieRememberMessage = 'Welcome and you will be remembered.';
 	private static $welcomeBackFlash = 'FlashMessageModel::welcomeBack';
+	*/
 
 	private static $welcomeBackMessage = 'Welcome back with cookies.';
 	private static $newUserMessage = 'Registered new user.';
@@ -31,7 +33,6 @@ class FlashMessageModel {
 	private static $shortUsernameMessage = 'Username has too few characters, at least 3 characters.';
 	private static $busyUsernameMessage = 'User exists, pick another username.';
 	private static $invalidCharactersMessage = 'Username contains invalid characters.';
-
 	private static $loginUsernameValue = 'FlashMessageModel::LoginUsername';
 	private static $registerUsernameValue = 'flashMessage::RegisterUsername';
 	private static $loginFlashMessage = 'FlashMessageModel::LoginFlashMessage';
@@ -88,7 +89,6 @@ class FlashMessageModel {
 	public function setUsernameMessage() {
 		$_SESSION[self::$loginFlashMessage] = self::$usernameMessage;
 	}
-
 
 	public function setShortPasswordMessage() {
 		$_SESSION[self::$registerFlashMessage] = self::$shortPasswordMessage;
