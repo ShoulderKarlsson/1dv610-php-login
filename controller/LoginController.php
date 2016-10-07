@@ -57,13 +57,11 @@ class LoginController {
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch(\error\PasswordMissingException $e) {
-			// $this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
 			$this->flashMessage->setPasswordMessage();
 			return header('Location: '.$_SERVER['PHP_SELF']);
 
 		} catch (\error\NoSuchUserException $e) {
-			// $this->flashMessage->setUsernameValueFlash($this->newUser->username);
 			$this->flashMessage->setLoginUsernameFlash($this->newUser->username);
 			$this->flashMessage->setWrongCredentialsMessage();
 			return header('Location: '.$_SERVER['PHP_SELF']);
